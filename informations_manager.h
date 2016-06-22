@@ -7,11 +7,12 @@
 
 #ifndef _INFORMATIONS_MANAGER_H
 #define _INFORMATIONS_MANAGER_H
+#define MAX_BYTE 22
 typedef struct manager_information
 {
-    char manager_number[8];
+    char manager_number[10];
     char name[MAX_BYTE];
-    char sex[7];
+    char sex[8];
     char postion[MAX_BYTE];
     char date[MAX_BYTE];
     char secretcode[MAX_BYTE];
