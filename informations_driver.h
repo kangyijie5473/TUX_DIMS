@@ -7,6 +7,7 @@
 
 #ifndef _INFORMATIONS_DRIVER_H
 #define _INFORMATIONS_DRIVER_H
+
 #define MAX_BYTE 22
 #define _SUCCEES 1
 #define _FAIL   0
@@ -26,6 +27,8 @@ typedef struct informations_driver
     struct informations_driver *next;//
 }driver_info;
 
+driver_info *search_driver_number_self( driver_info *phead,char user_in_number[MAX_BYTE]);
+int  change_driver_self();
 int  choose_manager_features();
 int choose_sort(driver_info *phead);
 int  choose_in_up();
@@ -37,7 +40,7 @@ int sign_up_driver();
 int sign_in_manager();
 int sign_in_manager_compare_secretcode(long postion,char user_in_secretcode[]);
 long sign_in_manager_compare_number(char user_in_number[]);
-int sign_in_driver();
+char* sign_in_driver();
 int sign_in_driver_compare_secretcode(long postion,char user_in_secretcode[]);
 long sign_in_driver_compare_number(char user_in_number[]);
 void secretcode_out(char secretcode[]);
@@ -48,7 +51,7 @@ void mem_to_file(driver_info* phead);
 driver_info *file_to_mem(void);
 driver_info *entry_driver_information();
 int create_new_driver(driver_info *phead);
-int  change_old_driver(driver_info *phead);
+int change_old_driver(driver_info *phead);
 int count_sex(char user_in_sex[],driver_info *phead);
 int count_car_type(char user_in_car_type[],driver_info *phead);
 int count_car_type_color(char user_in_car_type[],char user_in_car_color[],driver_info *phead);
