@@ -1,2 +1,2 @@
 # TUX_DIMS
-Drivers' Informations Management System
+  This is a Drivers' Informations Management System.
