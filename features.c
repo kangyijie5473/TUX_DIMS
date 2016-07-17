@@ -56,6 +56,28 @@ void BubbleSort_down(driver_info *head)
     }  
 }  
 //******************************************查找*********************************************************************************************
+driver_info *search_driver_number_self( driver_info *phead,char user_in_number[MAX_BYTE])
+{
+    driver_info *ptemp = phead,*pre;
+    pre = ptemp;
+    ptemp = ptemp->next;
+    system("clear");
+    printf("\n\n\n\n\n\n\n\n\n\n\n");
+    while(ptemp != NULL )
+    {
+        if(!strcmp(ptemp->number,user_in_number))
+       {
+       printf("\t\t\t\t司机编号   司机姓名   性别  职位   注册日期    车型    车牌  汽车颜色      联系电话\n ");
+       printf("\t\t\t\t%s  %s %s %s  %s  %s   %s  %s       %s",ptemp->number,ptemp->name,ptemp->sex,ptemp->postion,ptemp->date,ptemp->car_type,ptemp->car_number,ptemp->car_color,ptemp->phone_number);
+            fputs("\n",stdout);
+            sleep(1);
+            return pre;
+        }
+        pre = pre->next;
+        ptemp = ptemp->next;
+    }
+    return NULL;
+}
 driver_info *search_advanced_number( driver_info *phead)
 {
     driver_info *ptemp = phead,*pre;
@@ -64,7 +86,7 @@ driver_info *search_advanced_number( driver_info *phead)
     ptemp = ptemp->next;
     system("clear");
     printf("\n\n\n\n\n\n\n\n\n\n\n");
-    printf("\t\t\t\t\t                      输入要查询的司机编号 :");
+    printf("\t\t\t\t                      输入要查询的司机编号 :");
     my_fgets(user_in_number,MAX_BYTE);
     while(ptemp != NULL )
     {
@@ -73,7 +95,7 @@ driver_info *search_advanced_number( driver_info *phead)
        printf("\t\t\t\t司机编号   司机姓名   性别  职位   注册日期    车型    车牌  汽车颜色      联系电话\n ");
        printf("\t\t\t\t%s  %s %s %s  %s  %s   %s  %s       %s",ptemp->number,ptemp->name,ptemp->sex,ptemp->postion,ptemp->date,ptemp->car_type,ptemp->car_number,ptemp->car_color,ptemp->phone_number);
             fputs("\n",stdout);
-            sleep(5);
+            sleep(1);
             return pre;
         }
         pre = pre->next;
@@ -105,9 +127,9 @@ int search_vague_car_color_type(driver_info *phead )
         ptemp = ptemp->next;
     }
     if(i)
-    {getchar();return _SUCCEES;}
+    {printf("\n\n\t\t\t\t按任意键返回上一级菜单");getchar();return _SUCCEES;}
     else
-    {printf("\n\n\t\t\t\t未找到所查找车辆\n");getchar();return _FAIL;}
+    {printf("\n\n\t\t\t\t未找到所查找车辆,按任意键返回上一级菜单\n");getchar();return _FAIL;}
 }
 int  search_simple_car_number( driver_info *phead)
 {
@@ -125,12 +147,13 @@ int  search_simple_car_number( driver_info *phead)
        printf("\t\t\t\t司机编号   司机姓名   性别  职位   注册日期    车型    车牌  汽车颜色      联系电话\n ");
        printf("\t\t\t\t%s  %s %s %s  %s  %s   %s  %s       %s",ptemp->number,ptemp->name,ptemp->sex,ptemp->postion,ptemp->date,ptemp->car_type,ptemp->car_number,ptemp->car_color,ptemp->phone_number);
             fputs("\n",stdout);
+           printf("\t\t\t\t按任意键返回上一级菜单\n");
             getchar();
         return _SUCCEES;
         }
         ptemp = ptemp->next;
     }
-    printf("未找到所查找车辆\n");
+    printf("\n\n\t\t\t\t未找到所查找车辆,按任意键返回上一级菜单\n");
     getchar();
     return _FAIL;
 }
@@ -190,7 +213,7 @@ int delete_old_driver(driver_info *phead)
     driver_info *pre,*pnext;
     if((pre = search_advanced_number(phead)) != NULL)
     {
-        printf("\t\t\t\t确认删除此信息？(y/n)");
+        printf("\n\n\n\t\t\t\t确认删除此信息？(y/n)");
         k = getchar();
         getchar();
         if(k == 'y')
@@ -198,11 +221,18 @@ int delete_old_driver(driver_info *phead)
         pnext = pre->next->next;
         pre->next = pnext;
         mem_to_file(phead);
+        printf("\t\t\t删除成功！按任意键返回上一级菜单\n");
+        getchar();
         return _SUCCEES;
         }
-        else return _FAIL;
+        else 
+        {
+            printf("\t\t\t已取消，按任意键返回上一级菜单\n");
+            getchar();
+            return _FAIL;
+        }
     }
-    else{printf("\t\t\t\t未找到要删除的信息，返回上一级菜单\n");sleep(3);
+    else{printf("\t\t\t未找到要删除的信息，返回上一级菜单\n");sleep(3);
         return _FAIL;}
 }
 //****************************************************统计*********************************************************
@@ -219,9 +249,7 @@ int count(driver_info *phead)
     printf("\t\t\t\t3. 车型&颜色\n");
     printf("\t\t\t\t\t");
     fflush(stdin);
-    //setbuf(stdin,NULL);
     my_fgets(k,10);
-    //canf("%c",&k);
     switch(k[0])
     {
         case '1':
@@ -251,7 +279,7 @@ int count(driver_info *phead)
                 printf("\t\t\t\t经统计，车型为%s，颜色为%s的汽车有%d辆\n",user_in_car_type,user_in_car_color,count);
                 getchar();
                 return _SUCCEES;
-        default :printf("error");sleep(5);return _FAIL;
+        default :printf("error");sleep(3);return _FAIL;
     }
 }
 int count_car_type_color(char user_in_car_type[],char user_in_car_color[],driver_info *phead)
@@ -291,6 +319,60 @@ int count_sex(char user_in_sex[],driver_info *phead)
     return count;
 }
 //**********************************************************修改******************************************************
+int  change_driver_self(char user_in_number[])
+{
+    driver_info *ptemp,*phead,*pnew,*plook;
+    int i =3;
+    char k;
+    phead = file_to_mem();
+    ptemp = phead;
+    if((pnew = search_driver_number_self(ptemp,user_in_number)) != NULL)
+    {
+        plook = pnew;
+        pnew = pnew->next;
+    while(i)
+    {
+    printf("\n\n\n\n\n\n\n\n\n\n\n");
+    printf("\t\t\t\t请输入您想要修改的信息：\n");
+    printf("\t\t\t\t1.编号     2.姓名   3.性别    4.职位     5.密码  \n"); 
+    printf("\t\t\t\t6.注册日期 7.车型   8.车牌号  9.车辆颜色 0.手机号\n");
+    printf("                               ");
+        k =getchar();
+    getchar();
+        switch(k)
+    {
+        case '1':printf("\t\t\t\t请输入编号\n");printf("\t\t                ");my_fgets(pnew->number,MAX_BYTE );break;
+        case '2':printf("\t\t\t\t请输入姓名\n");printf("\t\t                ");my_fgets(pnew->name,MAX_BYTE );break;
+        case '3':printf("\t\t\t\t请输入性别（female/male）\n");printf("\t\t                ");my_fgets(pnew->sex,8 );break;
+        case '4':printf("\t\t\t\t请输入职位\n");printf("\t\t                ");my_fgets(pnew->postion,MAX_BYTE );break;
+        case '5':printf("\t\t\t\t请输入密码\n");printf("\t\t                ");my_fgets(pnew->secretcode,MAX_BYTE );secretcode_in(pnew->secretcode);break;
+        case '6':printf("\t\t\t\t请输入注册日期\n");printf("\t\t                ");my_fgets(pnew->date,MAX_BYTE );break;
+        case '7':printf("\t\t\t\t请输入车型\n");printf("\t\t                ");my_fgets(pnew->car_type,MAX_BYTE );break;
+        case '8':printf("\t\t\t\t请输入车牌号\n");printf("\t\t               ");my_fgets(pnew->car_number,MAX_BYTE );break;
+        case '9':printf("\t\t\t\t请输入车辆颜色\n");printf("\t\t                ");my_fgets(pnew->car_color,MAX_BYTE );break;
+        case '0':printf("\t\t\t\t请输入手机号\n");printf("\t\t                ");my_fgets(pnew->phone_number,MAX_BYTE );break;
+    }
+    printf("\t\t\t\t\t信息如下\n");
+    single_print(plook);
+    printf("\t\t\t\t\t确认信息无误？（y/n）");
+    k = getchar();
+        getchar();
+    setbuf(stdin,NULL);
+        if(k == 'y')
+     {
+        mem_to_file(phead);
+        return _SUCCEES;
+     }
+        else 
+        {i--;
+        continue;
+        }
+    }
+    }
+    else printf("\t\t司机编号不存在\n");
+    sleep(1);
+    return _FAIL;
+}
 int  change_old_driver(driver_info *phead)
 {
     driver_info *ptemp = phead,*pnew,*plook;
@@ -412,6 +494,7 @@ driver_info *entry_driver_information()
 	do
 	{
          printf("\t\t\t\t请输入编号\n");
+        printf("\t\t\t\t");
         my_fgets(tem,MAX_BYTE );
          if(!strcmp(tem,flag))
         break;
@@ -421,25 +504,34 @@ driver_info *entry_driver_information()
 		pnew->next = NULL;
         strcpy(pnew->number,tem);
         printf("\t\t\t\t请输入姓名\n");
+        printf("\t\t\t\t");
         my_fgets(pnew->name,MAX_BYTE );
          printf("\t\t\t\t请输入性别（female/male）\n");
+        printf("\t\t\t\t");
         my_fgets(pnew->sex,8 );
          printf("\t\t\t\t请输入职位\n");
+        printf("\t\t\t\t");
         my_fgets(pnew->postion,MAX_BYTE );
          printf("\t\t\t\t请输入密码\n");
+        printf("\t\t\t\t");
         system("stty -echo");
         my_fgets(pnew->secretcode,MAX_BYTE );
         secretcode_in(pnew->secretcode);
         system("stty echo");
          printf("\t\t\t\t请输入注册日期\n");
+        printf("\t\t\t\t");
         my_fgets(pnew->date,MAX_BYTE );
          printf("\t\t\t\t请输入车型\n");
+        printf("\t\t\t\t");
         my_fgets(pnew->car_type,MAX_BYTE );
          printf("\t\t\t\t请输入车牌号\n");
+        printf("\t\t\t\t");
         my_fgets(pnew->car_number,MAX_BYTE );
          printf("\t\t\t\t请输入车辆颜色\n");
+        printf("\t\t\t\t");
         my_fgets(pnew->car_color,MAX_BYTE );
          printf("\t\t\t\t请输入手机号\n");
+        printf("\t\t\t\t");
         my_fgets(pnew->phone_number,MAX_BYTE );
     }
 	while(1);
@@ -453,7 +545,8 @@ driver_info *file_to_mem(void)
 	pnew = (driver_info *)malloc(sizeof(driver_info));
 	pend = phead = pnew;
 	pnew->next = NULL;
-    fp = fopen("driver_information","r");
+    if((fp = fopen("driver_information","r")) != NULL)
+    {
     while(feof(fp) == 0)
     {
         pnew = (driver_info *)malloc(sizeof(driver_info));
@@ -482,6 +575,12 @@ driver_info *file_to_mem(void)
     pre->next =NULL;
 
     return phead;
+    }
+    else printf("\n\n\t\t\t\t信息文件不存在,请新建信息，在编号处输入end加回车终止\n");
+    phead = entry_driver_information();
+    mem_to_file(phead);
+    exit(1);
+    
 }
 void mem_to_file(driver_info* phead)
 {
