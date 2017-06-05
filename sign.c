@@ -77,7 +77,7 @@ printf("\n\n\n\n\n\n\n\n\n\n\n");
         else 
         {
             printf("\n\n\n\t\t                                     密码错误\n");
-            sleep(3);
+            sleep(1);
             i--;
             continue;
         }
@@ -85,13 +85,13 @@ printf("\n\n\n\n\n\n\n\n\n\n\n");
     else
     {
         printf("\n\n\n\t\t                                     司机用户编码不存在哦\n");
-        sleep(3);
+        sleep(1);
         i--;
     }
     }
     printf("\n\n\n\t\t                                     错误次数太多了噢\n ");
-    sleep(3);
-    return ;
+    sleep(1);
+    return NULL;
    
 }
 long sign_in_manager_compare_number(char user_in_number[])
@@ -167,7 +167,7 @@ printf("\n\n\n\n\n\n\n\n\n\n\n");
         else 
         {
             printf("\n\n\n\t\t                             密码错误\n");
-            sleep(3);
+            sleep(1);
             i--;
             continue;
         }
@@ -175,12 +175,12 @@ printf("\n\n\n\n\n\n\n\n\n\n\n");
     else
     {
         printf("\n\n\n\t\t                             用户编码不存在\n");
-        sleep(3);
+        sleep(1);
         i--;
     }
     }
     printf("\n\n\n\t\t                             错误次数太多了噢\n ");
-    sleep(3);
+    sleep(1);
     return _FAIL;
    
 }
